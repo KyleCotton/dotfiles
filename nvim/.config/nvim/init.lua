@@ -474,7 +474,7 @@ require('mason-lspconfig').setup()
 local servers = {
   -- clangd = {},
   -- gopls = {},
-  -- pyright = {},
+  pyright = {},
   -- rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
@@ -562,4 +562,10 @@ cmp.setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+-- Disable the arrow keys in all modes to force HJKL use.
+vim.keymap.set({"", "!"}, "<Right>", "", {})
+vim.keymap.set({"", "!"}, "<Left>", "", {})
+vim.keymap.set({"", "!"}, "<Up>", "", {})
+vim.keymap.set({"", "!"}, "<Down>", "", {})
 
