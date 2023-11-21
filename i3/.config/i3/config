@@ -188,6 +188,9 @@ bar {
 # Initialize the displays, i.e. the layout of the physical monitors.
 exec ~/.config/xrandr/displays.sh
 
+# Apply the GNOME customisations, i.e. light/dark mode, etc.
+exec --no-startup-id /usr/libexec/gsd-xsettings
+
 # Enable the scratchpad, useful for windows that can be hidden.
 bindsym $mod+Shift+minus move scratchpad  # Make the currently focused window a scratchpad
 bindsym $mod+minus scratchpad show        # Show the first scratchpad window
