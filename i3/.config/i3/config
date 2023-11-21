@@ -187,3 +187,7 @@ bar {
 
 # Initialize the displays, i.e. the layout of the physical monitors.
 exec ~/.config/xrandr/displays.sh
+
+# Enable the scratchpad, useful for windows that can be hidden.
+bindsym $mod+Shift+minus move scratchpad  # Make the currently focused window a scratchpad
+bindsym $mod+minus scratchpad show        # Show the first scratchpad window
