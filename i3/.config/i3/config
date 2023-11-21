@@ -184,3 +184,6 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3status
 }
+
+# Initialize the displays, i.e. the layout of the physical monitors.
+exec ~/.config/xrandr/displays.sh
