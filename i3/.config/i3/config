@@ -204,5 +204,7 @@ exec ~/.config/xrandr/displays.sh
 exec --no-startup-id /usr/libexec/gsd-xsettings
 
 # Enable the scratchpad, useful for windows that can be hidden.
-bindsym $mod+Shift+minus move scratchpad  # Make the currently focused window a scratchpad
-bindsym $mod+minus scratchpad show        # Show the first scratchpad window
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
