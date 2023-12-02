@@ -46,3 +46,24 @@ vim.opt.spell = true
 
 -- Have no less than 8 lines to the end of the screen from the cursor position.
 vim.opt.scrolloff = 8
+
+-- With `netrw` replace the window don't do splits or anything.
+vim.g.netrw_browse_split = 0
+
+-- Disable the `netrw` banner.
+-- vim.g.netrw_banner = 0
+
+-- Make new splits take up 25% of the available space.
+vim.g.netrw_winsize = 25
+
+-- [[ Highlight on yank ]]
+-- See `:help vim.highlight.on_yank()`
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  group = highlight_group,
+  pattern = '*',
+})
+
