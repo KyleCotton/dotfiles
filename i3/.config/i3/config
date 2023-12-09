@@ -208,3 +208,7 @@ exec --no-startup-id /usr/libexec/gsd-xsettings
 bindsym $mod+Shift+minus move scratchpad
 # Show the first scratchpad window
 bindsym $mod+minus scratchpad show
+
+# Lock the screen
+# bindsym $mod+Shift+period exec --no-startup-id slock
+bindsym --release $mod+Shift+period exec "slock"
