@@ -1,0 +1,34 @@
+[user]
+	name = Kyle Cotton
+	email = kylecottonkc@gmail.com
+	signingkey = AD0FFB5880480EFD000CCFBCEBDB0537402C6F6C
+
+[github]
+	user = KyleCotton
+
+[gpg]
+	program = gpg2
+
+[commit]
+	gpgsign = true
+
+[alias]
+	# Command Alias
+	s = status
+	l = log --graph --oneline
+	a = add
+	c = commit -S
+	d = diff
+	p = push --force-with-lease
+	P = pull
+	co = checkout
+	b = branch
+
+[init]
+	defaultBranch = main
+
+[pull]
+	ff = only
+
+[push]
+	default = simple
