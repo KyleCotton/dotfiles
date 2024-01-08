@@ -1,3 +1,11 @@
+# Check for interactive terminal
+#
+# If not running interactively, don't do anything and simply return.
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
 # Terminal Scaling
 #
 # If the terminal has been resized, update the value of `LINES` and `COLUMNS`.
