@@ -44,6 +44,9 @@ vim.o.colorcolumn = "80,120"
 vim.opt.spelllang = "en_us"
 vim.opt.spell = true
 
+-- Use the first suggested correction for a spelling mistake.
+vim.keymap.set('n', '<leader>c', "z=1<CR><CR>", { desc = '[C]orrect Spelling' })
+
 -- Have no less than 8 lines to the end of the screen from the cursor position.
 vim.opt.scrolloff = 8
 
