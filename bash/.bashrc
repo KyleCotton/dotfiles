@@ -30,7 +30,7 @@ fi
 # Personal Scripts
 #
 # Add the directory that contains my personal scripts to the `PATH` so they can be called easier.
-export PATH="$PATH:/home/kyle/bin"
+export PATH="$PATH:$HOME/bin"
 
 # Editor Configuration
 #
