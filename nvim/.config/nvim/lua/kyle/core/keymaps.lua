@@ -26,3 +26,10 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 
 -- Bring up `netrw` with a single keybinding.
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+
+-- Reload buffers from disk and save all.
+local reload_and_save = function()
+   vim.cmd("checktime")
+   vim.cmd("wa")
+end
+vim.keymap.set('n', '<leader>r', reload_and_save, { desc = '[R]eload and save buffers' })
