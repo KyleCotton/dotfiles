@@ -16,7 +16,7 @@ local on_lsp_attach = function(args)
   vim.keymap.set("n", 'gI', require('telescope.builtin').lsp_implementations, { desc = '[G]oto [I]mplementation' })
   vim.keymap.set("n", 'gD', vim.lsp.buf.declaration, { desc = '[G]oto [D]eclaration' })
   vim.keymap.set("n", 'K', vim.lsp.buf.hover, { desc = 'Hover Documentation' })
-  vim.keymap.set("i", '<C-h>', vim.lsp.buf.signature_help, { desc = 'Signature Documentation' })
+  vim.keymap.set("i", '<C-k>', vim.lsp.buf.signature_help, { desc = 'Signature Documentation' })
 
   -- Diagnostic keymaps
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
