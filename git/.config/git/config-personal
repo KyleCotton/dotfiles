@@ -1,0 +1,16 @@
+[user]
+	name = Kyle Cotton
+	email = kylecottonkc@gmail.com
+	signingkey = AD0FFB5880480EFD000CCFBCEBDB0537402C6F6C
+
+[github]
+	user = KyleCotton
+
+[gpg]
+	program = gpg2
+
+[commit]
+	gpgsign = true
+
+[alias]
+	c = commit -S --verbose

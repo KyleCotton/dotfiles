@@ -1,23 +1,9 @@
-[user]
-	name = Kyle Cotton
-	email = kylecottonkc@gmail.com
-	signingkey = AD0FFB5880480EFD000CCFBCEBDB0537402C6F6C
-
-[github]
-	user = KyleCotton
-
-[gpg]
-	program = gpg2
-
-[commit]
-	gpgsign = true
-
 [alias]
 	# Command Alias
 	s = status
 	l = log --graph --oneline
 	a = add
-	c = commit -S
+	c = commit --verbose
 	d = diff
 	p = push --force-with-lease
 	P = pull
@@ -32,3 +18,15 @@
 
 [push]
 	default = simple
+
+[branch]
+	sort = -committerdate
+
+[rerere]
+	enabled = true
+
+[includeIf "gitdir:/home/kyle/"]
+	path = ~/.config/git/config-personal
+
+[includeIf "gitdir:/home/kc/"]
+	path = ~/.config/git/config-work
