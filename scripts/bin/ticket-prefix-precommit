@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+"""
+Git ticket pre-commit hook.
+
+Append the ticket number to the start of the commit message.
+
+Enable this hook by adding the following line to the `.git/hooks/prepare-commit-msg` file:
+
+```bash
+ticket-prefix-precommit $1 $2 $3
+```
+"""
+import sys
+import subprocess
+
+from typing import Optional
+
+
+def ticket_prefix() -> Optional[str]:
+    command = subprocess.run("ticket-prefix", text=True, capture_output=True)
+    if command.returncode == 0:
+        return command.stdout.strip()
+
+    return None
+
+
+def main():
+    _, commit_file, commit_source, *_ = sys.argv + [None] * 3
+    ticket: Optional[str] = ticket_prefix()
+
+    if not commit_file or commit_source or not ticket:
+        return
+
+    with open(commit_file, "r") as f:
+        commit_msg: str = f.read()
+
+    with open(commit_file, "w") as f:
+        f.write(f"{ticket}: \n{commit_msg}")
+        f.flush()
+
+
+if __name__ == "__main__":
+    main()
