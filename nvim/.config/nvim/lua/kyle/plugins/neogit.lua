@@ -20,5 +20,6 @@ return {
     }
     vim.keymap.set('n', '<leader>gg', neogit.open, { desc = '[G]it Open Neogit' })
     vim.keymap.set('n', '<leader>gc', neogit.action("commit", "commit", { '--verbose' }), { desc = 'Git [C]ommit' })
+    vim.keymap.set('n', '<leader>gf', neogit.action("commit", "fixup"), { desc = 'Git Commit [F]ixup' })
   end,
 }

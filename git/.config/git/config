@@ -5,7 +5,8 @@
 	a = add
 	c = commit --verbose
 	d = diff
-	p = push --force-with-lease
+	p = push 
+	fp = push --force-with-lease
 	P = pull
 	co = checkout
 	b = branch
