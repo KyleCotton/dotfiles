@@ -15,6 +15,13 @@ return {
   config = function()
     require('diffview').setup {
       use_icons = false,
+
+      -- When resolving merge conflicts use the horizontal view.
+      view = { 
+        merge_tool = {
+          layout = "diff3_mixed"
+        }
+      }
     }
 
     vim.keymap.set('n', '<leader>gd', diffview_toggle, { desc = 'Git [D]iff toggle' })
