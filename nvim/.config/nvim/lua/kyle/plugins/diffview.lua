@@ -21,7 +21,20 @@ return {
         merge_tool = {
           layout = "diff3_mixed"
         }
-      }
+      },
+      enhanced_diff_hl = {
+        a = {
+          "DiffAdd:DiffviewDiffAddAsDelete",
+          "DiffDelete:DiffviewDiffDelete",
+          "DiffChange:DiffviewDiffChangeAsDelete",
+          "DiffText:DiffviewDiffTextRed",
+        },
+        b = {
+          "DiffDelete:DiffviewDiffDelete",
+          "DiffChange:DiffviewDiffChangeAsAdd",
+          "DiffText:DiffviewDiffTextGreen",
+        }
+      },
     }
 
     vim.keymap.set('n', '<leader>gd', diffview_toggle, { desc = 'Git [D]iff toggle' })
