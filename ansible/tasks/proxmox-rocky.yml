@@ -1,0 +1,10 @@
+- name: Install QEMU Guest Agent
+  ansible.builtin.dnf:
+    name:
+      - qemu-guest-agent
+    state: latest
+
+- name: Enable the QEMU Guest Agent service
+  ansible.builtin.systemd_service:
+      name: qemu-guest-agent
+      enabled: true

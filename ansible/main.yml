@@ -1,0 +1,25 @@
+- hosts: "*"
+  become: yes
+  vars:
+    username: "kyle"
+    ssh_key_filename: "id_kc_rsa"
+    config: "{{ lookup('ansible.builtin.env', 'XDG_CONFIG') }}"
+    home: "{{ lookup('ansible.builtin.env', 'HOME') }}"
+    workspace: "{{ home }}/workspace"
+    dotfiles: "{{ home }}/workspace/dotfiles"
+    neovim_version: "v0.10.2"
+    neovim_url: "https://github.com/neovim/neovim/releases/download"
+
+  tasks:
+  - name: Include component tasks
+    ansible.builtin.include_tasks: "{{ task_file }}"
+    loop:
+      - tasks/maintenance.yml
+      - tasks/epel.yml
+      - tasks/dotfiles.yml
+      - tasks/devtools.yml
+      - tasks/i3.yml
+      - tasks/xrdp.yml
+      - tasks/neovim.yml
+    loop_control:
+      loop_var: task_file

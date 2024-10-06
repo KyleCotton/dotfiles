@@ -1,0 +1,18 @@
+---
+- name: Install i3
+  ansible.builtin.dnf:
+    name:
+      - xorg-x11-server-Xorg
+      - xorg-x11-xinit
+      - i3
+      - i3status
+      - dmenu
+    state: latest
+
+- name: Start i3 from X11
+  lineinfile:
+    path: "{{ home }}/.xinitrc"
+    line: exec i3
+    mode: '0755'
+    state: present
+    create: true

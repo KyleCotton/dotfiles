@@ -1,0 +1,22 @@
+- name: Install GNU Stow
+  ansible.builtin.dnf:
+    name:
+      - stow
+    state: latest
+
+- name: Stow dotfiles
+  ansible.builtin.command:
+    cmd: "stow --target={{ home }} {{ item }} --verbose=2"
+    chdir: "{{ dotfiles }}"
+  register: result
+  changed_when: 'result.stderr is search("LINK: ")'
+  loop:
+    - alacritty
+    - bash
+    - git
+    - i3
+    - nvim
+    - scripts
+    - tmux
+    - xrandr
+    - zellij

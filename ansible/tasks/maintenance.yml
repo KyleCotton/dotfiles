@@ -1,0 +1,4 @@
+- name: Upgrade all DNF packages
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
