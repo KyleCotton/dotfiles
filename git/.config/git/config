@@ -10,6 +10,7 @@
 	P = pull
 	co = checkout
 	b = branch
+	fix = !"git c --fixup=$(git-commit-select-interactive)"
 
 [init]
 	defaultBranch = main
