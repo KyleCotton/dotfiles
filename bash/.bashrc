@@ -50,7 +50,11 @@ bind 'set completion-ignore-case on'
 # Will have the following format: `<FULL PATH> [<GIT BRANCH>] >>=`
 # e.g. `~/workspace/dotfiles main >>=`
 # Note: Some of the spacing around the git branch is being configured in the `git-prompt` script.
-export PS1='\[\033[01;34m\]\w\[\033[00m\] $(git-prompt)>>= '
+if [ -x "$(command -v git-prompt)" ]; then
+    export PS1='\[\033[01;34m\]\w\[\033[00m\] $(git-prompt)>>= '
+else
+    export PS1='\[\033[01;34m\]\w\[\033[00m\] >>= '
+fi
 
 # Alias
 #
@@ -80,15 +84,22 @@ shopt -s histappend
 # Programming Configurations
 #
 # Some languages/tools will require modifications to the path these are set in this block.
-. "$HOME/.cargo/env"
+#
+# Rust - cargo
+if [ -d "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi
+# Python - pyenv
 export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
-
-# Created by `pipx` on 2024-02-01 23:01:41
+if [ -d "$PYENV_ROOT" ]; then
+    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+fi
+# Python - pipx
 export PATH="$PATH:$HOME/.local/bin"
-
+# Node - nvm
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+if [ -d "$NVM_DIR" ]; then
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
