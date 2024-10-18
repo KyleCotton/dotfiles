@@ -67,6 +67,11 @@ alias n='nvim'
 #
 # * Use C-f to launch the tmux session selector.
 bind -x '"\C-f": tmux-sessionizer'
+# * Use C-g to launch interactive git commit selector if within tmux session.
+if [ -n "$TMUX" ]; then
+    bind -x '"\C-g": tmux send-keys "$(git-commit-select-interactive)"'
+fi
+
 
 # Bash History
 #
