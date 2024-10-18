@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+function f { 
+    git log --oneline | fzf | cut -d ' ' -f1; 
+}
+
+f
