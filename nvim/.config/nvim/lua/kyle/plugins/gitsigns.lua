@@ -10,6 +10,7 @@ return {
       topdelete = { text = '‾' },
       changedelete = { text = '~' },
     },
+    current_line_blame = true,
     on_attach = function(bufnr)
       local gitsigns = require("gitsigns")
       vim.keymap.set('n', '<leader>gp', gitsigns.preview_hunk, { buffer = bufnr, desc = '[P]review git hunk' })
