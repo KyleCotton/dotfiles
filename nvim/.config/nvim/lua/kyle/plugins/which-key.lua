@@ -1,15 +1,13 @@
 -- Useful plugin to show you pending keybinds.
 return {
   'folke/which-key.nvim',
-  opts = {},
-  config = function()
-    -- document existing key chains
-    require('which-key').register {
-      ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-      ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-      ['<leader>f'] = { name = '[F]ind', _ = 'which_key_ignore' },
-      ['<leader>l'] = { name = '[L]SP', _ = 'which_key_ignore' },
-      ['<leader>lw'] = { name = '[L]SP [W]orkspace', _ = 'which_key_ignore' },
+  opts = {
+    spec = {
+      { '<leader>g', group = '[G]it' },
+      { '<leader>s', group = '[S]earch' },
+      { '<leader>f', group = '[F]ind' },
+      { '<leader>l', group = '[L]SP' },
+      { '<leader>lw', group = '[L]SP [W]orkspace' },
     }
-  end
+  },
 }
