@@ -33,3 +33,6 @@ local reload_and_save = function()
    vim.cmd("wa")
 end
 vim.keymap.set('n', '<leader>r', reload_and_save, { desc = '[R]eload and save buffers' })
+
+-- Toggle highlighting
+vim.keymap.set('n', '<leader>sh', function() vim.cmd("set hlsearch!") end, { desc = '[S]earch [H]ightlight toggle' })

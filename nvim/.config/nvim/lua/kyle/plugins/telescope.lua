@@ -46,7 +46,7 @@ return {
     vim.keymap.set('n', '<leader>fg', require('telescope.builtin').git_files, { desc = '[F]ind [G]it Files' })
     vim.keymap.set('n', '<leader>ff', function() require('telescope.builtin').find_files({hidden=true}) end, { desc = '[F]ind [F]iles' })
     vim.keymap.set('n', '<leader>ld', require('telescope.builtin').diagnostics, { desc = '[L]SP [D]iagnostics' })
-    vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
+    vim.keymap.set('n', '<leader>sH', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
     vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
     vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
   end
