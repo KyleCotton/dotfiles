@@ -8,6 +8,7 @@ return {
       { '<leader>f', group = '[F]ind' },
       { '<leader>l', group = '[L]SP' },
       { '<leader>lw', group = '[L]SP [W]orkspace' },
+      { '<leader>h', group = '[H]arpoon' },
     }
   },
 }
