@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+function f { 
+    git rev-parse --short HEAD | tr -d '\n' | xclip -i -selection clipboard
+}
+
+f

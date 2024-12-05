@@ -13,6 +13,9 @@ return {
     current_line_blame = true,
     on_attach = function(bufnr)
       local gitsigns = require("gitsigns")
+
+      vim.keymap.set('n', '<leader>gh', function() vim.fn.system { "git-commit-copy-head" } end, { buffer = bufnr, desc = 'Copy [H]ead commit hash' })
+
       vim.keymap.set('n', '<leader>gp', gitsigns.preview_hunk, { buffer = bufnr, desc = '[P]review git hunk' })
 
       vim.keymap.set('n', '<leader>gs', gitsigns.stage_hunk, { buffer = bufnr, desc = '[S]tage git hunk' })
