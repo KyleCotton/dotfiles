@@ -24,13 +24,19 @@ return {
     -- See `:help telescope` and `:help telescope.setup()`
     local telescope = require('telescope')
 
+    local ignore_patterns = {".git", ".venv"}
+
     telescope.setup {
-      defaults = {
-        mappings = {
-          i = {
-            ['<C-u>'] = false,
-            ['<C-d>'] = false,
-          },
+      pickers = {
+        live_grep = {
+          file_ignore_patterns = ignore_patterns,
+          additional_args = function(_)
+            return {"--hidden"}
+          end,
+        },
+        find_files = {
+          file_ignore_patterns = ignore_patterns,
+          hidden = true,
         },
       },
     }
@@ -40,14 +46,15 @@ return {
     -- Enable telescope fzf native, if installed
     pcall(require('telescope').load_extension, 'fzf')
 
-    vim.keymap.set('n', '<leader>/', require('telescope.builtin').current_buffer_fuzzy_find,
-      { desc = '[/] Fuzzily search in current buffer' })
-    vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = '[F]ind [B]uffers' })
-    vim.keymap.set('n', '<leader>fg', require('telescope.builtin').git_files, { desc = '[F]ind [G]it Files' })
-    vim.keymap.set('n', '<leader>ff', function() require('telescope.builtin').find_files({hidden=true}) end, { desc = '[F]ind [F]iles' })
-    vim.keymap.set('n', '<leader>ld', require('telescope.builtin').diagnostics, { desc = '[L]SP [D]iagnostics' })
-    vim.keymap.set('n', '<leader>sH', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-    vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-    vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
+    local bt = require('telescope.builtin')
+
+    vim.keymap.set('n', '<leader>/', bt.current_buffer_fuzzy_find, { desc = '[/] Fuzzily search in current buffer' })
+    vim.keymap.set('n', '<leader>fb', bt.buffers, { desc = '[F]ind [B]uffers' })
+    vim.keymap.set('n', '<leader>fg', bt.git_files, { desc = '[F]ind [G]it Files' })
+    vim.keymap.set('n', '<leader>ff', bt.find_files, { desc = '[F]ind [F]iles' })
+    vim.keymap.set('n', '<leader>ld', bt.diagnostics, { desc = '[L]SP [D]iagnostics' })
+    vim.keymap.set('n', '<leader>sH', bt.help_tags, { desc = '[S]earch [H]elp' })
+    vim.keymap.set('n', '<leader>sg', bt.live_grep, { desc = '[S]earch by [G]rep' })
+    vim.keymap.set('n', '<leader>sr', bt.resume, { desc = '[S]earch [R]esume' })
   end
 }
