@@ -1,39 +1,30 @@
 # Dotfiles
 
-## Ansible
+## Development Environment
 
-If you want to use localhost you need to install `ansible`:
+There is a script in `scripts/bin/dev-env` that is used to bootstrap and manage
+the entire environment.
 
-```bash
-sudo dnf install epel-release
-sudo /usr/bin/crb enable
-sudo dnf install ansible
-```
-
-Sometimes the version of the collections bundled with the default installation
-will be too old, but we can update them:
+When initially bootstrapping you can run the following, executing without the
+`--run` option will use the dry run:
 
 ```bash
-ansible-community --version
-ansible-galaxy collection install community.general
+pushd $HOME/workspace/dotfiles/scripts/bin
+./dev-env --run
+popd
 ```
 
-Ansible can be used to configure the development environment on a new machine.
+NOTE: Part of the process will be to `stow` all of the `dotfiles` this requires
+that all of the original version have already been deleted. You can either run
+the script and wait for it to fail then remove those files. Primarily, the
+conflicting file will be `~/.bashrc` so you can go ahead and remove this first.
+
+After doing this initially you will be able to simply run the command in
+isolation as the scripts will now be on the `$PATH`:
 
 ```bash
-ansible-playbook main.yml --user kyle --ask-become-pass -i 192.168.1.58,
+dev-env --run
 ```
-
-```bash
-# install neovim
-ansible-playbook \
-    ansible/playbooks/neovim.yml \
-    --user kyle \
-    --ask-pass \
-    --ask-become-pass \
-    -i ansible/inventory.yml
-```
-
 ## Applying Changes
 
 The dotfiles are managed by GNU Stow, this allows for all of the dotfiles to be
@@ -44,13 +35,11 @@ command:
 
 ```bash
 stow -t ~ */
-stow -t ~ {alacritty,bash,i3,nvim,scripts,tmux,xrandr,zellij,git}
 ```
 
 We need to set the target directory to `~` as `stow` will be default use the
 parent directory. The `*/` path is used to specify only the directories in the
 root the repository, this excludes the `README.md` for example.
-
 
 ## Fonts
 

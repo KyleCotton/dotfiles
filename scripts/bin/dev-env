@@ -1,0 +1,160 @@
+#!/usr/bin/env bash
+
+# exit on error, error for undefined variables, popogate piped command exit
+# codes
+set -euo pipefail
+
+dry_run="1"
+platform=""
+
+function log {
+    if [[ $dry_run == "1" ]]; then
+        echo "[DRY_RUN]: $@"
+    else
+        echo "$@"
+    fi
+}
+
+function run {
+    log "$@"
+    if [[ $dry_run == "0" ]]; then
+        $@
+    fi
+}
+
+function update_packages {
+    if [[ $platform == "Rocky Linux" ]]; then
+        run sudo dnf upgrade --assumeyes
+    elif [[ $platform == "Ubuntu" ]]; then
+        run sudo apt update
+        run sudo apt upgrade --yes
+    else
+        log "unsupported platform"
+        exit 1
+    fi
+}
+
+function epel_crb_repos {
+    if [[ $platform == "Rocky Linux" ]]; then
+        run sudo dnf install --assumeyes epel-release
+        run sudo dnf config-manager --set-enabled epel
+        run sudo dnf config-manager --set-enabled crb
+    fi
+}
+
+function install_dev_packages {
+    # determine the install command and install packages with different names
+    if [[ $platform == "Rocky Linux" ]]; then
+        local install_cmd="sudo dnf install --assumeyes"
+
+        run ${install_cmd} clang-tools-extra ninja-build
+
+    elif [[ $platform == "Ubuntu" ]]; then
+        local install_cmd="sudo apt install --yes"
+
+        run ${install_cmd} clang-tools ninja
+
+    else
+        log "unsupported platform"
+        exit 1
+    fi
+
+    run ${install_cmd} gcc clang stow tmux git cmake make
+}
+
+# Stow all of the dotfiles in the correct locations
+#
+# NOTE: This requires that the original versions of the files have been removed
+# before running, primarily this means that the existing `~/.bashrc` should
+# be removed.
+function stow_dotfiles {
+    run pushd $HOME/workspace/dotfiles
+    run stow -t ~ {alacritty,bash,i3,nvim,scripts,tmux,xrandr,zellij,git}
+    run popd
+}
+
+function install_i3 {
+    if [[ $platform == "Rocky Linux" ]]; then
+        run sudo dnf install --assumeyes \
+            xorg-x11-server-Xorg \
+            xorg-x11-xinit \
+            i3 \
+            i3status \
+            dmenu
+    fi
+}
+
+function install_xrdp {
+    if [[ $platform == "Rocky Linux" ]]; then
+        run sudo dnf install --assumeyes xrdp
+        run sudo systemctl enable xrdp
+        run sudo systemctl enable xrdp-sesman
+        run sudo systemctl start xrdp
+        run sudo systemctl start xrdp-sesman
+    fi
+}
+
+function install_neovim {
+    local nvim_version="v0.10.2"
+    local installed_version=$(nvim --version | head -n 1 | grep -oP 'v\d+\.\d+\.\d+' || true)
+
+    if [[ $installed_version == $nvim_version ]]; then
+        log "nvim version $nvim_version is already installed"
+        return
+    fi
+
+    if [[ $platform == "Rocky Linux" ]]; then
+        run sudo dnf install --assumeyes \
+            wget \
+            compat-lua-libs \
+            libtermkey \
+            libtree-sitter \
+            libvterm \
+            luajit \
+            luajit2.1-luv \
+            msgpack \
+            unibilium \
+            xsel \
+            tar
+
+        run rm -rf $HOME/workspace/neovim
+        run mkdir -p $HOME/workspace/neovim
+        run pushd $HOME/workspace/neovim
+
+        run wget https://github.com/neovim/neovim/releases/download/${nvim_version}/nvim-linux64.tar.gz
+        run wget https://github.com/neovim/neovim/releases/download/${nvim_version}/nvim-linux64.tar.gz.sha256sum
+        run sha256sum -c nvim-linux64.tar.gz.sha256sum
+
+        run tar xzvf nvim-linux64.tar.gz
+        run mkdir -p $HOME/.local/bin
+        run cp -rf nvim-linux64 $HOME/.local/nvim
+        run ln -sf $HOME/.local/nvim/bin/nvim $HOME/.local/bin/nvim
+
+        run popd
+        run rm -rf $HOME/workspace/neovim
+    fi
+}
+
+function main {
+    # consume all of the arguments looking for '--run' to disable the dry run
+    while [[ $# -gt 0 ]]; do
+        echo "ARG: \"$1\""
+        if [[ "$1" == "--run" ]]; then
+            dry_run="0"
+        fi
+        shift
+    done
+
+    platform=$(cat /etc/os-release | grep -oP '(?<=^NAME=")[^"]+')
+    log "the '${platform}' platform has been selected"
+
+    update_packages
+    epel_crb_repos
+    install_dev_packages
+    stow_dotfiles
+    install_i3
+    install_xrdp
+    install_neovim
+}
+
+main "$@"

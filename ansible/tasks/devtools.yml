@@ -1,9 +1,0 @@
-- name: Install development software
-  ansible.builtin.dnf:
-    name: "{{ item }}"
-    state: latest
-  loop:
-    - gcc
-    - clang
-    - clang-tools-extra  # clangd, clang-format, clang-tidy, etc
-
