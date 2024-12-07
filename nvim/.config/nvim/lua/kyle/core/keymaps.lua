@@ -36,3 +36,7 @@ vim.keymap.set('n', '<leader>r', reload_and_save, { desc = '[R]eload and save bu
 
 -- Toggle highlighting
 vim.keymap.set('n', '<leader>sh', function() vim.cmd("set hlsearch!") end, { desc = '[S]earch [H]ightlight toggle' })
+
+-- Allow easy navigation of the quickfix list
+vim.keymap.set("n", "<C-j>", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "<C-k>", "<cmd>cprev<CR>zz")
