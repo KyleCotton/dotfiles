@@ -59,7 +59,7 @@ function install_dev_packages {
         exit 1
     fi
 
-    run ${install_cmd} gcc clang stow tmux git cmake make
+    run ${install_cmd} gcc clang stow tmux git cmake make ripgrep
 }
 
 # Stow all of the dotfiles in the correct locations
