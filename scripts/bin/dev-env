@@ -95,8 +95,8 @@ function install_xrdp {
 }
 
 function install_neovim {
-    local nvim_version="v0.10.2"
-    local installed_version=$(nvim --version | head -n 1 | grep -oP 'v\d+\.\d+\.\d+' || true)
+    local nvim_version="v0.11.4"
+    local installed_version=$(nvim --version 2>/dev/null | head -n 1 | grep -oP 'v\d+\.\d+\.\d+' || true)
 
     if [[ $installed_version == $nvim_version ]]; then
         log "nvim version $nvim_version is already installed"
@@ -116,23 +116,41 @@ function install_neovim {
             unibilium \
             xsel \
             tar
-
-        run rm -rf $HOME/workspace/neovim
-        run mkdir -p $HOME/workspace/neovim
-        run pushd $HOME/workspace/neovim
-
-        run wget https://github.com/neovim/neovim/releases/download/${nvim_version}/nvim-linux64.tar.gz
-        run wget https://github.com/neovim/neovim/releases/download/${nvim_version}/nvim-linux64.tar.gz.sha256sum
-        run sha256sum -c nvim-linux64.tar.gz.sha256sum
-
-        run tar xzvf nvim-linux64.tar.gz
-        run mkdir -p $HOME/.local/bin
-        run cp -rf nvim-linux64 $HOME/.local/nvim
-        run ln -sf $HOME/.local/nvim/bin/nvim $HOME/.local/bin/nvim
-
-        run popd
-        run rm -rf $HOME/workspace/neovim
+    elif [[ $platform == "Ubuntu" ]]; then
+        run sudo apt update
+        run sudo apt install -y \
+            wget \
+            libtermkey-dev \
+            libtree-sitter-dev \
+            libvterm-dev \
+            luajit \
+            libluajit-5.1-dev \
+            libmsgpack-dev \
+            libunibilium-dev \
+            xsel \
+            tar \
+            build-essential \
+            curl
+    else
+        echo "Unsupported platform: $platform"
+        exit 1
     fi
+
+    run rm -rf $HOME/workspace/neovim
+    run mkdir -p $HOME/workspace/neovim
+    run pushd $HOME/workspace/neovim
+
+    run wget https://github.com/neovim/neovim/releases/download/${nvim_version}/nvim-linux-x86_64.tar.gz
+
+    run tar xzvf nvim-linux-x86_64.tar.gz
+
+    run mkdir -p $HOME/.local/bin
+    run cp -rf nvim-linux-x86_64 $HOME/.local/nvim
+
+    run ln -sf $HOME/.local/nvim/bin/nvim $HOME/.local/bin/nvim
+
+    run popd
+    run rm -rf $HOME/workspace/neovim
 }
 
 function main {
@@ -141,7 +159,7 @@ function main {
         echo "ARG: \"$1\""
         if [[ "$1" == "--run" ]]; then
             dry_run="0"
-        fi
+	fi
         shift
     done
 
