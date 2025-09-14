@@ -85,6 +85,9 @@ if [ -n "$TMUX" ]; then
     bind -x '"\C-g": tmux send-keys "$(git-commit-select-interactive)"'
 fi
 
+# GPG TMUX Compatability
+#
+export GPG_TTY=$(tty)
 
 # Bash History
 #
