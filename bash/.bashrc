@@ -32,6 +32,19 @@ fi
 # Add the directory that contains my personal scripts to the `PATH` so they can be called easier.
 export PATH="$PATH:$HOME/bin"
 
+# Load environment variables
+#
+# Load all of the env vars from the given file, intended for use with a `.env` file.
+dotenv() {
+  if [ -f "$1" ]; then
+    set -a
+    source "$1"
+    set +a
+  else
+    echo "No such file: $1"
+  fi
+}
+
 # Editor Configuration
 #
 # Use neovim as the main editor if it is installed or fallback to regular vim.
