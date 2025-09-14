@@ -52,7 +52,7 @@ function install_dev_packages {
     elif [[ $platform == "Ubuntu" ]]; then
         local install_cmd="sudo apt install --yes"
 
-        run ${install_cmd} clang-tools ninja
+        run ${install_cmd} clang-tools ninja-build
 
     else
         log "unsupported platform"
